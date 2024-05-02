@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diffie-Hellman Key Exchange</title>
+    <script>
+      function power(a, b, p) {
+        if (b == 1) {
+            return a;
+        } else {
+            return Math.pow(a, b) % p;
+        }
+      }
+      
+      function performKeyExchange() {
+        var P = parseInt(document.getElementById("inputP").value);
+        var G = parseInt(document.getElementById("inputG").value);
+        var a = parseInt(document.getElementById("inputA").value);
+        var b = parseInt(document.getElementById("inputB").value);
+
+        var x = power(G, a, P);
+        var y = power(G, b, P);
+
+        var ka = power(y, a, P);
+        var kb = power(x, b, P);
+
+        document.getElementById('outputAlice').innerHTML = "Secret key for Alice: " + ka;
+        document.getElementById("outputBob").innerHTML = "Secret key for Bob: " + kb;
+      }
+    </script>
+</head>
+<body>
+    <h1>Diffie-Hellman key Exchange</h1>
+    <label for="inputP">Enter the value of of P (Prime Number): </label>
+    <input type="number" id="inputP" value="23"><br><br>
+
+    <label for="inputG">Enter the value of G (Primitive Root for P): </label>
+    <input type="number" id="inputG" value="9"><br><br>
+
+    <label for="inputA">Enter the private key for Alice:</label>
+    <input type="number" id="inputA" value="4"><br><br>
+
+    <label for="inputB">Enter the private key for Bob:</label>
+    <input type="number" id="inputB" value="3"><br><br>
+
+    <button onclick="performKeyExchange()">Perform Key Exchange</button>
+
+    <h2>Secret Keys: </h2>
+    <p id="outputAlice"></p>
+    <p id="outputBob"></p>
+</body>
+</html>
